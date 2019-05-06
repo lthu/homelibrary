@@ -1,0 +1,25 @@
+
+
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Etusivu</a>
+            <a class="navbar-brand" routerLink="/browse" routerLinkActive="active">Selaa</a>
+            <a class="navbar-brand" routerLink="/add" routerLinkActive="active">Lisää</a>
+            <a class="navbar-brand" routerLink="/modify" routerLinkActive="active">Muokkaa</a>
+          </nav>
+     <!-- <ul class="nav nav-tabs">
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Etusivu</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/browse" routerLinkActive="active">Selaa</a>
+          </li>        
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/add" routerLinkActive="active">Lisää</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/add" routerLinkActive="active">Muokkaa</a>
+        </li>
+        </ul>-->
+        <div id="container">
+  <router-outlet></router-outlet>
+  </div>

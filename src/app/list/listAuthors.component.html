@@ -1,0 +1,14 @@
+  <table mat-table [dataSource]="authors" matSort class="mat-elevation-z8" style="width: 100%">
+        <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> id </th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+              </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nimi </th>
+      <td mat-cell *matCellDef="let element"><a class="nav-link" routerLink="/view/author/{{element.id}}">{{element.name}}</a></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  
