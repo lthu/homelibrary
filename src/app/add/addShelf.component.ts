@@ -4,10 +4,11 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-add-shelf',
-  template: `<form>
-  <input type="text" name="shelf" placeholder="Hylly" [(ngModel)]="shelf">
-  <button type="submit" (click)="submit()"> OK </button>
-  <code> {{msg | json}} </code>
+  template: `
+  <form>
+    <input type="text" name="shelf" placeholder="Hylly" #nameElement="ngModel" [(ngModel)]="shelf" required>
+    <button type="submit" [disabled]="!nameElement.valid" (click)="submit()">OK</button>
+    <code> {{msg | json}} </code>
   </form>`,
 
 })
@@ -18,9 +19,9 @@ export class AddShelfComponent {
 
   submit() {
     const body = { name: this.shelf };
-    this.ds.addShelf(this.funk.bind(this), body);
+    this.ds.addShelf(this.callbackFunction.bind(this), body);
   }
-  funk(res) {
+  callbackFunction(res) {
     this.msg = res;
   }
 }

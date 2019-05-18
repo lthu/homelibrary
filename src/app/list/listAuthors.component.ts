@@ -15,5 +15,5 @@ export class ListAuthorsComponent  implements OnInit{
 displayedColumns = ['id', 'name'];
 ngOnInit() {
 
-}
+  }
 }

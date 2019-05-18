@@ -6,15 +6,17 @@ import { HomeComponent } from './home/home.component';
 import { ListComponent } from './list/list.component';
 import { ViewAuthorComponent } from './view/viewAuthor.component';
 import { ModifyComponent } from './modify/modify.component';
+import { ViewShelfComponent } from './view/viewShelf.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'add', component: AddComponent },
-  { path: 'browse', component: ListComponent },
-  { path: 'view/book/:id', component: ViewComponent },
-  { path: 'view/author/:id', component: ViewAuthorComponent },
-  { path: 'modify/book/:id', component: ModifyComponent },
+  { path: 'homeLibrary', component: HomeComponent },
+  { path: 'homeLibrary/add', component: AddComponent },
+  { path: 'homeLibrary/browse', component: ListComponent },
+  { path: 'homeLibrary/view/book/:id', component: ViewComponent },
+  { path: 'homeLibrary/view/author/:id', component: ViewAuthorComponent },
+  { path: 'homeLibrary/view/shelf/:id', component: ViewShelfComponent },
+  { path: 'homeLibrary/modify/book/:id', component: ModifyComponent },
   { path: '**', component: HomeComponent }
 ];
 

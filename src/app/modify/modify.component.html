@@ -1,56 +1,129 @@
-<div class="cont">
-  <form>
-      <div class="form-group">
-          <label for="bookNname">Nimi</label>
-          <input name="bookName" class="form-control" id="bookName" placeholder="Teoksen nimi" [(ngModel)]="name">
-      </div>
-      <div class="form-group">
-          <label for="aLaji">Aineistolaji</label>
-          <select name="aineistolaji" class="form-control" id="aLaji" placeholder="Aineistolaji" [(ngModel)]="aineistolaji" >
-          <option value="Kirja" value="1">Kirja</option>
-          <option value="Muut" value="2">Muut</option>
-          </select>
-      </div>
-      <div class="form-group">
-          <label for="isbn">ISBN</label>
-         <input name="isbn" class="form-control" id="isbn" placeholder="ISBN" [(ngModel)]="isbn">
-      </div>
-      <div class="form-group">
-          <label for="authors">Tekijä</label>
-    <input id="authors" class="form-control" list="authorsDatalist" name="authorId" placeholder="Tekijä" [(ngModel)]="authorId">
-        <datalist id="authorsDatalist">
-          <option *ngFor="let author of authors" value="{{author.name}}" id="{{author.id}}">
-        </datalist>
-      </div>
-      <div class="form-group">
-          <label for="description">Kuvaus</label>
-        <input name="description" id="description" class="form-control" placeholder="Kuvaus" [(ngModel)]="description">
-      </div>
-      <div class="form-group">
-          <label for="year">Vuosi</label>
-        <input name="year" id="year" class="form-control" placeholder="Vuosi" [(ngModel)]="year">
-      </div>
-      <div class="form-group">
-          <label for="info">Lisätiedot</label>
-        <input name="info" id="info" class="form-control" placeholder="Lisätiedot" [(ngModel)]="info">
-      </div>
-        <div class="form-group">
-            <label for="genre">Tyylilajit</label>
-        <select name="genre" id="genre" class="form-control" [(ngModel)]="genre" multiple>
-        <option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</option>
-      </select>
-    </div>
-      <div class="form-group">
-          <label for="shelves">Hylly</label>
-    <input id="shelves" class="form-control" list="shelfDatalist" name="shelfId" placeholder="Hylly" [(ngModel)]="shelfId">
-        <datalist id="shelfDatalist">
-          <option *ngFor="let shelf of shelves" value="{{shelf.name}}" id="{{shelf.id}}">
-        </datalist>
-      </div>
-        <div class="form-group">
-            <label for="status">Tila</label>
-    <input name="statusId" id="status" class="form-control" placeholder="Tila ID" [(ngModel)]="statusId">
-  </div>
-    <button type="submit" (click)="submit()">Lähetä</button>
-    
+
+  
+  <h1 id="title">{{name}} <a class="returnLink" routerLink="/homeLibrary/view/book/{{id}}"><<Palaa</a> </h1>
+
+  <p><code>{{msg | json}}</code></p>
+ 
+<mat-tab-group>
+<mat-tab label="Perustiedot">
+  <div class="cont">
+    <form #formElement="ngForm"> 
+        <div class="form-group row">
+          <label for="bookNname" class="col-sm-2 col-form-label-sm">Nimi</label>
+          <div class="col-sm-10">
+            <input name="bookName" #nameElement="ngModel" [disabled]="!formCheck" class="form-control" id="bookName" placeholder="Teoksen nimi" [(ngModel)]="name" required>
+            <span [hidden]="nameElement.valid || nameElement.pristine">Anna nimi!</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="category" class="col-sm-2 col-form-label-sm">Kategoria</label>
+            <div class="col-sm-10">
+              <select name="category" [disabled]="!formCheck"  class="custom-select" id="category" placeholder="Kategoria" [(ngModel)]="categoryId">
+                <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+              </select>
+            </div>
+        </div>
+        <div class="form-group row">
+          <label for="aLaji" class="col-sm-2 col-form-label-sm">Aineistolaji</label>
+            <div class="col-sm-10">
+              <select name="aineistolaji" [disabled]="!formCheck"  class="custom-select" id="aLaji" placeholder="Aineistolaji" [(ngModel)]="alaji" >
+                <option value="Kirja" value="1">Kirja</option>
+                <option value="Muut" value="2">Muut</option>
+              </select>
+            </div>
+        </div>
+        <div class="form-group row">
+          <label for="isbn" class="col-sm-2 col-form-label-sm">ISBN</label>
+          <div class="col-sm-10">
+            <input name="isbn" [disabled]="!formCheck"  class="form-control" id="isbn" placeholder="ISBN" [(ngModel)]="isbn">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="authors" class="col-sm-2 col-form-label-sm">Tekijä</label>
+          <div class="col-sm-10">
+            <input id="authors" [disabled]="!formCheck"  class="form-control" list="authorsDatalist" name="authorId" placeholder="Tekijä" [(ngModel)]="author">
+            <datalist id="authorsDatalist">
+              <option *ngFor="let author of authors" value="{{author.name}}" id="{{author.id}}">{{author.name}}</option>
+            </datalist>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="description" class="col-sm-2 col-form-label-sm">Kuvaus</label>
+          <div class="col-sm-10">
+            <textarea name="description" [disabled]="!formCheck"  id="description" class="form-control" placeholder="Kuvaus" [(ngModel)]="description" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="year" class="col-sm-2 col-form-label-sm">Vuosi</label>
+          <div class="col-sm-10">
+            <input name="year" id="year" [disabled]="!formCheck"  class="form-control" placeholder="Vuosi" [(ngModel)]="year">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="info" class="col-sm-2 col-form-label-sm">Lisätiedot</label>
+          <div class="col-sm-10">
+            <input name="info" id="info" [disabled]="!formCheck"  class="form-control" placeholder="Lisätiedot" [(ngModel)]="info">
+          </div>
+        </div> 
+        <div class="form-group row">
+          <label for="genre" class="col-sm-2 col-form-label-sm">Tyylilajit</label>      
+          <div class="col-sm-10">
+            <select name="genre" [disabled]="!formCheck"  id="genre" class="form-control" [(ngModel)]="genre" size="{{genreLength}}" multiple>
+              <option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</option>
+            </select>
+            <ng-container *ngIf="genreCheck">
+              <p class="genretitle">Nykyiset tyylilajit</p>
+              <ul class="genreList">
+                <li *ngFor="let bookGenre of bookGenres">
+                  {{bookGenre.name}} <span class="listLink" (click)="delGenre(bookGenre.id)">D</span>
+                </li>
+              </ul>
+            </ng-container>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="shelves" class="col-sm-2 col-form-label-sm">Hylly</label>
+          <div class="col-sm-10">
+            <select name="shelfId" [disabled]="!formCheck"  id="shelves" class="custom-select"  [(ngModel)]="shelfId">
+              <option *ngFor="let shelf of shelves" value="{{shelf.id}}">{{shelf.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label-sm">Tila</label>
+          <mat-radio-group name="radio" [(ngModel)]="statusId">
+            <mat-radio-button [disabled]="!formCheck"  class="example-radio-button tilanappi" [value]="1">Hyllyssä</mat-radio-button>
+            <mat-radio-button [disabled]="!formCheck" class="example-radio-button tilanappi" [value]="2">Lainassa</mat-radio-button>
+            <mat-radio-button [disabled]="!formCheck" class="example-radio-button tilanappi" [value]="3">Poistettu</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+
+      <button class="btn btn-primary" type="submit" [disabled]="!formElement.form.valid || !formCheck" (click)="submit()">Lähetä muutokset</button><br/>
+      <button class="btn btn-danger" type="submit" [disabled]="!formCheck" (click)="deleteBook()">Poista teos</button>
     </form>
+  </div>
+</mat-tab>
+  <mat-tab label="Kuvat">
+  <form>
+    <div class="form-group">
+      <label for="picture">Lisää manuaalisesti uusi kuva, joka on jo lähetetty.</label>
+      <input name="picture" id="picture" #fileElement="ngModel" class="form-control" placeholder="Kuva" [(ngModel)]="newPicture" required>
+      <button class="btn btn-primary" type="submit" [disabled]="!fileElement.valid" (click)="addPicture()">Lisää</button> 
+    </div>
+    <div class="form-group">
+      <ul class="pictureList">
+        <li *ngFor="let picture of pictures">
+          {{picture.name}} <span (click)="delPicture(picture.id)">Poista</span>
+        </li>
+      </ul>
+    </div>
+    <div class="custom-file">
+      <label class="custom-file-label" for="file">Lähetä uusi kuva.</label>
+      <input class="custom-file-input" id="file" #fileUploadElement="ngModel" type="file" name="file" [(ngModel)]="file" required>
+    </div>
+    <button class="btn btn-primary" [disabled]="!fileUploadElement.valid" type="submit" (click)="fileUp()">Upload</button>
+</form>
+</mat-tab>
+</mat-tab-group>
+    

@@ -1,3 +1,50 @@
-.cont {
-    width: 50%;
+.cont form {
+    width: 40%;
+    margin-left: 2%;
+    margin-right: auto;
+    margin-top: 2%;
+}
+#picture {
+    width: 25%;
+}
+
+.returnLink {
+    font-size: 10px;
+}
+#title {
+    margin-left: 2%;
+}
+.radionappi {
+    padding: 25px;
+}
+
+.genreList {
+    list-style-type: circle;
+    margin-top: 10px;
+    width: 150px;
+    border: 2px solid skyblue;
+    border-radius: 10px;
+    background-color: beige;
+    
+}
+.tilanappi {
+    padding: 10px;
+}
+.listLink {    
+    color: royalblue;
+    font-weight: 700;
+    
+}
+.listLink:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.genretitle {
+    margin-top: 15px;
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.custom-file {
+    width: 25%;
 }

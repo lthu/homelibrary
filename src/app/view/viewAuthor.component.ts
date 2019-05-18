@@ -5,18 +5,17 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'app-view-author',
   template: `
-  <p> id = {{id}} </p>
-  <p> <code> {{res}} </code> </p>
+
   <p> <code> {{items | json }} </code> </p>
+  <p> <code> {{msg | json}} </code> </p>
   <form>
-  <input name="author" placeholder="Kirjailijan nimi" [(ngModel)]="name">
-  <button mat-button type="submit" (click)="submit()"> OK </button>
-  <span> {{msg | json}} </span>
+    <label for="author">Muuta nimeä</label>
+    <input id="author" name="author" placeholder="Kirjailijan nimi" #nameElement="ngModel" [(ngModel)]="name" pattern=".{3,}" required>
+    <button class="btn btn-primary" type="submit" [disabled]="!nameElement.valid" (click)="submit()">OK</button>
   </form>`,
   styleUrls: ['./view.component.css']
 })
 export class ViewAuthorComponent implements OnInit {
-  private res;
   private id;
   private items;
   private name;
@@ -32,15 +31,17 @@ export class ViewAuthorComponent implements OnInit {
     this.getAuthor();
 }
 
-  funk(res) {
-
-    this.res = res['author'][0].name;
-    this.name = this.res;
-    this.items = res['books'];
+  callbackFunction(res, success) {
+    if (success) {
+      this.name = res['author'][0].name;
+      this.items = res['books'];
+    } else {
+      this.msg = res.message + ' ' + res.description;
+    }
 
   }
   getAuthor() {
-    this.ds.getAuthor(this.funk.bind(this), this.id);
+    this.ds.getAuthor(this.callbackFunction.bind(this), this.id);
   }
   submit() {
     const body = {name: this.name, id: this.id};

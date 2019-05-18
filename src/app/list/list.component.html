@@ -1,30 +1,50 @@
 <mat-tab-group>
-  <mat-tab label="Books">
+  <mat-tab label="Kirjat">
 
-      <button mat-button (click)="toggleFilter()">Filter</button>
-  <mat-form-field>
-  
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  
+
+<mat-form-field>
+  <mat-label>Nimi</mat-label>
+  <input matInput [formControl]="nameFilter">
 </mat-form-field>
+<mat-form-field>
+  <mat-label>Tekijä</mat-label>
+  <input matInput [formControl]="authorFilter">
+</mat-form-field>
+<!--<mat-form-field>
+    <mat-label>Tyylilaji</mat-label>
+    <input matInput [formControl]="genreFilter">
+  </mat-form-field>--->
+  
+
 
 <table mat-table [dataSource]="datasource" matSort class="mat-elevation-z8">
 
-
-  <ng-container matColumnDef="nimi">
+    
+  <ng-container matColumnDef="name">
+     
     <th mat-header-cell *matHeaderCellDef> Nimi </th>
-    <td mat-cell *matCellDef="let element"><a class="nav-link" routerLink="/view/book/{{element.ID}}">{{element.nimi}}</a></td>
+    <td mat-cell *matCellDef="let element"><a class="nav-link" routerLink="/homeLibrary/view/book/{{element.ID}}">{{element.name}}</a></td>
   </ng-container>
 
 
-  <ng-container matColumnDef="tekija">
+  <ng-container matColumnDef="author">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Kirjailija </th>
-    <td mat-cell *matCellDef="let element"> {{element.tekija}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.author}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="vuosi">
+  <ng-container matColumnDef="year">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Vuosi </th>
-    <td mat-cell *matCellDef="let element"> {{element.vuosi}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="shelf">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Hylly </th>
+      <td mat-cell *matCellDef="let element"> {{element.shelf}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="genres"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Genre </th>
+      <td mat-cell *matCellDef="let element"> {{element.genres}} </td>
   </ng-container>
 
 
@@ -35,8 +55,8 @@
 </table>
 
 </mat-tab>
-<mat-tab label="Authors">
-  <app-authors [authors]="kirjailijjat">
+<mat-tab label="Kirjailijat">
+  <app-authors [authors]="authors">
   </app-authors>
 </mat-tab>
 </mat-tab-group>

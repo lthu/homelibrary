@@ -5,30 +5,40 @@ import { DataService } from '../data.service';
 @Component({
   selector: 'app-view',
   template: `
-  <p> <code> {{msg | json}} </code> </p>
-  <p>  <a routerLink="/modify/book/{{id}}" routerLinkActive="active">M</a></p>
-  <h1>{{res.nimi}} </h1>
-  <p>Tekijä - {{res.tekija}} </p>
-  <p>Vuosi - {{res.vuosi}} </p>
-  <p>Tyylilajit - {{res.tyylilajit}} </p>
-  <p>Lisätiedot - {{res.lisatiedot}} </p>
-  <p>Hylly - {{res.hylly}} </p>
-  <p>Tila - {{res.tila}} </p>
-  <p>
-  <img *ngFor="let picture of pictures"  width=250 height=300 src="assets/{{picture}}">
-  </p>
-  <p><button type="submit" (click)="del()"> Delete </button></p>
 
+  <p> <code> {{msg | json}} </code> </p>
+  <ng-container *ngIf="validBook">
+    <h1 id="title">{{res.name}} <a class="modifyLink" routerLink="/homeLibrary/modify/book/{{id}}" routerLinkActive="active">M</a></h1>
+    <hr>
+    <div id="cont">
+      <p><b>Tekijä:</b>  {{res.author}} </p>
+      <p><b>Vuosi:</b>  {{res.year}} </p>
+      <p><b>Kategoria:</b>  {{res.category}} </p>
+      <p><b>Tyylilajit:</b>  {{res.genres}} </p>
+      <p><b>Kuvaus:</b>  {{res.description}} </p>
+      <p><b>Lisätiedot:</b>  {{res.info}} </p>
+      <p><b>Hylly:</b>  {{res.shelf}} </p>
+      <p><b>Tila:</b> <span [class.hylly]="isInShelf"> {{res.status}} </span></p>
+      <p>
+    <a *ngFor="let picture of pictures" href="http://lauri.kk4.fi/assets/{{picture}}">
+    <img  width=216 height=288 src="http://lauri.kk4.fi/assets/{{picture}}"></a>
+    </p>
+
+  </div>
+</ng-container>
 
   `,
   styleUrls: ['./view.component.css']
 })
 export class ViewComponent implements OnInit {
+ 
+  private validBook = false;
   private id: number;
-  private res = {ID: '', nimi: '', tekija: '', tekija_id: '', vuosi: '', tyylilajit: '', kuvat: '', tila: '', hylly: '', lisatiedot: ''};
+  private res = {ID: '', name: '', category: '', author: '', authorId: '', year: '', shelf: '', info: '', isbn: '', description: '', status: '',};
   private genre = [];
   private pictures = [];
   private msg;
+  private isInShelf: boolean;
   constructor(private route: ActivatedRoute, private ds: DataService) { }
 
 
@@ -37,31 +47,30 @@ export class ViewComponent implements OnInit {
       this.id = params['id'];
     });
 
-    this.ds.fetchOne(this.id, this.funk.bind(this));
+    this.ds.fetchOne(this.id, this.callbackFunction.bind(this));
   }
 
-  funk(res) {
-    this.res = res[0];
+  callbackFunction(res, success) {
+    if (success) {
+      this.validBook = true;
+      this.res = res[0];
 
-    this.msg = res;
-    this.setPictures();
-  }
-
-  setPictures() {
-    if (this.res["kuvat"]) {
-    this.pictures = this.res["kuvat"].split(',');
+      this.setPictures();
+      if (this.res.status === 'Hyllyssä') {
+        this.isInShelf = true;
+      } else {
+        this.isInShelf = false;
+      }
     } else {
+      this.msg = res.message + ' ' + res.description;
+    }
 
+  }
+  setPictures() {
+    if (this.res["pictures"]) {
+      this.pictures = this.res["pictures"].split(',');
+    } else {
     this.pictures[0] = 'nopic.jpg';
     }
   }
-
-  del() {
-    const body = {id: this.id};
-    this.ds.deleteBook(this.callbackDelete.bind(this), body);
-  }
-  callbackDelete(res) {
-    console.log(res);
-  }
-
 }

@@ -1,61 +1,71 @@
 <div class="cont">
-<form>
+  <form #formElement="ngForm">
     <div class="form-group">
-        <label for="bookNname">Nimi</label>
-        <input name="bookName" class="form-control" id="bookName" placeholder="Teoksen nimi" [(ngModel)]="name">
+      <label for="bookNname">Nimi</label>
+      <input name="bookName" class="form-control" id="bookName" placeholder="Teoksen nimi" [(ngModel)]="book.name" required>
     </div>
     <div class="form-group">
-        <label for="aLaji">Aineistolaji</label>
-        <select name="aineistolaji" class="form-control" id="aLaji" placeholder="Aineistolaji" [(ngModel)]="aineistolaji" >
+      <label for="category">Kategoria</label>
+      <select name="category" class="form-control" id="category" placeholder="Kategoria" [(ngModel)]="book.categoryId">
+        <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+      </select> 
+    </div>
+    <div class="form-group">
+      <label for="aLaji">Aineistolaji</label>
+      <select name="aineistolaji" class="form-control" id="aLaji" placeholder="Aineistolaji" [(ngModel)]="book.aineistolaji" >
         <option value="Kirja" value="1">Kirja</option>
         <option value="Muut" value="2">Muut</option>
-        </select>
+      </select>
     </div>
     <div class="form-group">
-        <label for="isbn">ISBN</label>
-       <input name="isbn" class="form-control" id="isbn" placeholder="ISBN" [(ngModel)]="isbn">
+      <label for="isbn">ISBN</label>
+      <input name="isbn" class="form-control" id="isbn" placeholder="ISBN" [(ngModel)]="book.isbn">
     </div>
     <div class="form-group">
-        <label for="authors">Tekijä</label>
-  <input id="authors" class="form-control" list="authorsDatalist" name="authorId" placeholder="Tekijä" [(ngModel)]="authorId">
+      <label for="authors">Tekijä</label>
+      <input id="authors" class="form-control" list="authorsDatalist" name="authorId" placeholder="Tekijä" [(ngModel)]="book.authorId">
       <datalist id="authorsDatalist">
         <option *ngFor="let author of authors" value="{{author.name}}" id="{{author.id}}">
       </datalist>
     </div>
     <div class="form-group">
-        <label for="description">Kuvaus</label>
-      <input name="description" id="description" class="form-control" placeholder="Kuvaus" [(ngModel)]="description">
+      <label for="description">Kuvaus</label>
+      <input name="description" id="description" class="form-control" placeholder="Kuvaus" [(ngModel)]="book.description">
     </div>
     <div class="form-group">
-        <label for="year">Vuosi</label>
-      <input name="year" id="year" class="form-control" placeholder="Vuosi" [(ngModel)]="year">
+      <label for="year">Vuosi</label>
+      <input name="year" type="number" id="year" class="form-control" placeholder="Vuosi" [(ngModel)]="book.year" max="9999" min="0">
     </div>
     <div class="form-group">
-        <label for="info">Lisätiedot</label>
-      <input name="info" id="info" class="form-control" placeholder="Lisätiedot" [(ngModel)]="info">
+      <label for="info">Lisätiedot</label>
+      <input name="info" id="info" class="form-control" placeholder="Lisätiedot" [(ngModel)]="book.info">
     </div>
-      <div class="form-group">
-          <label for="genre">Tyylilajit</label>
-      <select name="genre" id="genre" class="form-control" [(ngModel)]="genre" multiple>
-      <option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</option>
-    </select>
-  </div>
     <div class="form-group">
-        <label for="shelves">Hylly</label>
-  <input id="shelves" class="form-control" list="shelfDatalist" name="shelfId" placeholder="Hylly" [(ngModel)]="shelfId">
-      <datalist id="shelfDatalist">
-        <option *ngFor="let shelf of shelves" value="{{shelf.name}}" id="{{shelf.id}}">
-      </datalist>
+      <label for="genre">Tyylilajit</label>
+      <select name="genre" id="genre" class="form-control" [(ngModel)]="book.genre" multiple>
+        <option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</option>
+      </select>
     </div>
-      <div class="form-group">
-          <label for="status">Tila</label>
-  <input name="statusId" id="status" class="form-control" placeholder="Tila ID" [(ngModel)]="statusId">
-</div>
-  <button type="submit" (click)="submit()">Lähetä</button>
-  <button type="submit" (click)="clear()">Tyhjennä</button>
+    <div class="form-group">
+      <label for="shelves">Hylly</label>
+      <select name="shelves" class="form-control" id="shelves" [(ngModel)]="book.shelfId" required>
+        <option *ngFor="let shelf of shelves" value="{{shelf.id}}">{{shelf.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="status">Tila</label>
+      <mat-radio-group name="radio" [(ngModel)]="book.statusId">
+        <mat-radio-button class="radionappi" [value]="1">Hyllyssä</mat-radio-button>
+        <mat-radio-button class="radionappi" [value]="2">Lainassa</mat-radio-button>
+        <mat-radio-button class="radionappi" [value]="3">Poistettu</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <button type="submit" [disabled]="!formElement.form.valid" (click)="submit()">Lähetä</button>
+    <button type="submit" (click)="clear()">Tyhjennä</button>
   </form>
 </div>
-  <p><code>{{msg | json}}</code></p>
-  <app-add-author></app-add-author>
-  <app-add-genre></app-add-genre>
-  <app-add-shelf></app-add-shelf>
+<p><code>{{msg | json}}</code></p>
+<hr>
+<app-add-author></app-add-author>
+<app-add-genre></app-add-genre>
+<app-add-shelf></app-add-shelf>

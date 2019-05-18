@@ -1,0 +1,23 @@
+#cont {
+    padding-top: 20px;
+    margin-left: 2%;
+    margin-right: auto;
+    line-height: 50%;
+    
+}
+#title {
+    margin-left: 2%;
+}
+.modifyLink {
+    font-size: 15px;
+}
+#code {
+    font-size: 13px;
+}
+img {
+    padding: 5px;
+}
+
+.hylly {
+    color: green;
+}

@@ -4,10 +4,11 @@ import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-add-genre',
-  template: `<form>
-  <input type="text" name="genre" placeholder="Tyylilaji" [(ngModel)]="genre">
-  <button type="submit" (click)="submit()"> OK </button>
-  <code> {{msg | json}} </code>
+  template: `
+  <form>
+    <input type="text" name="genre" #nameElement="ngModel" placeholder="Tyylilaji" [(ngModel)]="genre" required>
+    <button type="submit" [disabled]="!nameElement.valid" (click)="submit()">OK</button>
+    <code> {{msg | json}} </code>
   </form>`,
 
 })
@@ -18,9 +19,10 @@ export class AddGenreComponent {
 
   submit() {
     const body = { name: this.genre };
-    this.ds.addGenre(this.funk.bind(this), body);
+    this.ds.addGenre(this.callbackFunction.bind(this), body);
+    console.log(body);
   }
-  funk(res) {
+  callbackFunction(res) {
     this.msg = res;
   }
 }

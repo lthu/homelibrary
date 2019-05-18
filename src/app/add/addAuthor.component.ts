@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 
 
 @Component({
   selector: 'app-add-author',
-  template: `<form>
-  <input type="text" name="author" placeholder="Kirjailija" [(ngModel)]="author">
-  <button type="submit" (click)="submit()"> OK </button>
-  <code> {{msg | json}} </code>
+  template: `
+  <form>
+    <input type="text" name="author" #nameElement="ngModel" placeholder="Kirjailija" [(ngModel)]="author" required>
+    <button type="submit" [disabled]="!nameElement.valid" (click)="submit()">OK</button>
+    <code> {{msg | json}} </code>
   </form>`,
 
 })
@@ -17,11 +18,10 @@ export class AddAuthorComponent {
   constructor(private ds: DataService) {}
 
   submit() {
-    //this.ds.addAuthor()
     const body = { name: this.author };
-    this.ds.addAuthor(this.funk.bind(this), body);
+    this.ds.addAuthor(this.callbackFunction.bind(this), body);
   }
-  funk(res) {
+  callbackFunction(res) {
     this.msg = res;
   }
 }
